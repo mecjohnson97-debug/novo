@@ -57,17 +57,19 @@ export default function CreatePostDialog({ open, onOpenChange, user, token, onCr
         body: JSON.stringify(post),
       });
       if (!res.ok) throw new Error();
+      let videoFailed = false;
       if (video) {
         const created = await res.json();
         const fd = new FormData();
         fd.append('file', video.file);
         const vr = await fetch(`${API}/api/posts/${created.id}/video`, { method: 'POST', headers: authHeaders(token), body: fd });
         if (!vr.ok) {
+          videoFailed = true;
           const detail = (await vr.json().catch(() => ({}))).detail;
           toast.error(`Post publicado, mas o vídeo não foi enviado${detail ? `: ${detail}` : ` (erro ${vr.status})`}`);
         }
       }
-      toast.success('Publicado com sucesso!');
+      if (!videoFailed) toast.success('Publicado com sucesso!');
       setPost(empty(user?.role));
       setVideo(null);
       onOpenChange(false);

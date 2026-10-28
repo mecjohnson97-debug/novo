@@ -1,0 +1,41 @@
+{
+  "summary": "Tested job search (backend + Jobs page), profile photos, post video upload, and whether server.py imports without emergentintegrations. Backend: 24/24 pytest pass. /api/jobs/search returns 60 jobs for all 13 regions with no RAPIDAPI_KEY (sources: Jobicy and Remotive, plus Arbeitnow for de and remote). /api/jobs/regions returns all 13 regions. A .mp4 or .mov upload sent as application/octet-stream is accepted (mime inferred from the extension). A .txt upload is rejected with 400. Range requests return 206. server.py imports even when emergentintegrations is blocked. Frontend: the Jobs page loads 60 cards, region chips reload results and the label (Brasil -> França), search works, the details dialog opens, and the Plataformas tab lists region-specific platforms (BR: Catho, InfoJobs, Vagas, Gupy; PT: Net-Empregos, IEFP; DE: StepStone; FR: France Travail and others). Profile photos: add shows profile-photo-0 with the image loaded and a success toast; remove works and persists after reload. Video post via the UI: the video upload returns 200, the post shows post-video-<id>, and the served bytes match the original file (same md5). The test Chromium has no H.264 codec (canPlayType(avc1) is empty), so actual playback could not be checked in the browser. Only the bytes and headers were checked.",
+  "backend_issues": {
+    "critical": [],
+    "minor": [
+      {"endpoint": "GET /api/jobs/search", "issue": "Without RAPIDAPI_KEY, every region returns only remote, mostly English tech jobs (Jobicy/Remotive). Remotive ignores region, and Jobicy geo values such as 'brazil' or 'latam' fall back to broad results. Searching 'garçom' in BR returns 'AI Trainer' and 'Software Engineer' (10 results). The error is gone, but results are not local or relevant for Brazilian or migrant users. Set RAPIDAPI_KEY on Render for real local jobs, or label the results as 'vagas remotas internacionais'."},
+      {"endpoint": "GET /api/posts/{id}/video", "issue": "GZipMiddleware(minimum_size=1000) compresses video 206 responses when the client sends Accept-Encoding: gzip (content-encoding: gzip together with Content-Range for the uncompressed bytes). Browsers request media with identity encoding, so this works in practice. It still wastes CPU on Render and may break some proxies or clients. Exclude video/* responses from gzip."},
+      {"endpoint": "DELETE /api/posts/{id}", "issue": "No delete endpoint exists for posts (404). Users cannot delete their own posts, and the GridFS videos are never removed."}
+    ]
+  },
+  "frontend_issues": {
+    "ui_bugs": [
+      {"component": "JobsPage handleRegion", "issue": "Changing the region while on the Plataformas tab switches back to the Vagas tab once the search finishes, because searchExternalJobs always calls setViewMode('search'). Only switch the view when the user is already on 'search', or when the search came from the search button.", "selector": "[data-testid=jobs-region-*] + [data-testid=jobs-tab-platforms]", "priority": "LOW"}
+    ],
+    "integration_issues": [
+      {"flow": "CreatePostDialog video failure", "issue": "If the video upload fails, the error toast is followed by the 'Publicado com sucesso!' success toast, which is confusing.", "affected_selectors": ["create-post-submit-btn"]}
+    ],
+    "design_issues": []
+  },
+  "test_report_links": ["/app/backend/tests/test_jobs_photos_video.py", "/app/test_reports/pytest/pytest_results.xml"],
+  "action_items": [
+    "Optional: set RAPIDAPI_KEY on Render, or tell users that free-source results are remote international jobs. Local relevance for BR, PT and LATAM is weak.",
+    "Exclude video responses from GZipMiddleware (or use a custom gzip that skips video/*).",
+    "JobsPage: keep the Plataformas tab active when the region changes.",
+    "CreatePostDialog: do not show the success toast when the video upload fails.",
+    "Consider adding DELETE /api/posts/{id} that also deletes the GridFS video."
+  ],
+  "critical_code_review_comments": [
+    "server.py is about 2650 lines. Split it into routers (jobs, posts and videos, photos, translate).",
+    "upload_post_video reads the whole file (up to 50MB) into memory with file.read(). Acceptable, but stream to GridFS to save memory on Render's small instances.",
+    "get_post_video without a Range header calls stream.read() and loads the full video into memory. Use StreamingResponse.",
+    "/api/jobs/details/{job_id} still returns 503 without RAPIDAPI_KEY. The frontend does not use it for free-source jobs, so there is no impact now."
+  ],
+  "updated_files": ["/app/backend/tests/test_jobs_photos_video.py"],
+  "success_rate": {"backend": "100%", "frontend": "95%"},
+  "test_credentials": "teste.fotos@example.com / Teste123! (works). /app/memory/test_credentials.md is empty, so add these credentials there.",
+  "seed_data_creation": "Created TEST_ posts with videos and a test profile photo. All were cleaned up via the DB (no DELETE endpoint exists).",
+  "retest_needed": false,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "Login: POST /api/auth/login returns {token, user}. There is no /api/auth/me. The frontend has no /login route (it is /auth). For UI tests, set localStorage 'token' and 'user'. backend/pytest.ini uses xdist (-n). The Playwright Chromium has no H.264, so use WebM to check actual playback. The video test file used is the MDN flower.mp4."
+}

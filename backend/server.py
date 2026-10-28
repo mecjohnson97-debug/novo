@@ -1618,7 +1618,7 @@ async def _jobicy(session, terms, region):
     if terms:
         params['tag'] = terms[0]
     data = await _fetch_json(session, 'https://jobicy.com/api/v2/remote-jobs', params)
-    return [{
+    jobs = [{
         'id': f"jobicy-{j.get('id')}", 'title': j.get('jobTitle', ''), 'company': j.get('companyName', ''),
         'company_logo': j.get('companyLogo'), 'location': f"Remoto · {j.get('jobGeo', 'Mundo')}",
         'description': _strip_html(j.get('jobDescription') or j.get('jobExcerpt', ''))[:1500],
@@ -1626,6 +1626,7 @@ async def _jobicy(session, terms, region):
         'url': j.get('url', ''), 'source': 'Jobicy', 'salary_min': j.get('salaryMin'), 'salary_max': j.get('salaryMax'),
         'salary_currency': j.get('salaryCurrency'), 'is_remote': True,
     } for j in data.get('jobs', [])]
+    return [j for j in jobs if _matches(j, terms)]
 
 async def _remotive(session, terms):
     params = {'limit': 50}
@@ -2445,7 +2446,7 @@ async def get_post_video(post_id: str, request: Request):
         raise HTTPException(status_code=404, detail='Vídeo não encontrado')
     size = post['video_size']
     stream = await video_bucket.open_download_stream(ObjectId(post['video_file_id']))
-    headers = {'Accept-Ranges': 'bytes', 'Cache-Control': 'public, max-age=604800'}
+    headers = {'Accept-Ranges': 'bytes', 'Cache-Control': 'public, max-age=604800', 'Content-Encoding': 'identity'}
     rng = request.headers.get('range')
     m = re.match(r'bytes=(\d*)-(\d*)', rng or '')
     if m and (m.group(1) or m.group(2)):

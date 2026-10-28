@@ -96,6 +96,7 @@ export default function JobsPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [locationQuery, setLocationQuery] = useState('');
   const [region, setRegion] = useState('br');
+  const [localSearch, setLocalSearch] = useState(true);
   const [locationLoading, setLocationLoading] = useState(false);
   const [jobOffers, setJobOffers] = useState([]);
   const [jobSeekers, setJobSeekers] = useState([]);
@@ -250,8 +251,9 @@ export default function JobsPage() {
         const data = await response.json();
         setExternalJobs(data.jobs || []);
         setTotalJobs(data.total || 0);
+        setLocalSearch(!!data.local_search);
         setCurrentPage(page);
-        setViewMode('search');
+        if (scroll) setViewMode('search');
         if (data.jobs?.length > 0) {
           if (scroll) setTimeout(() => resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
           toast.success(`${data.jobs.length} vagas encontradas!`);
@@ -535,6 +537,13 @@ export default function JobsPage() {
                 </span>
               )}
             </div>
+
+            {!localSearch && !searchLoading && (
+              <div className="rounded-xl bg-[#FFF7EC] border border-[#F1D9B5] p-3 text-sm text-[#5C524B]" data-testid="jobs-remote-notice">
+                Mostrando vagas remotas internacionais. Para vagas locais em {regionInfo.label}, use a aba{' '}
+                <button type="button" onClick={() => setViewMode('platforms')} className="font-semibold text-[#1F7A6F] underline" data-testid="jobs-remote-notice-platforms">Plataformas</button>.
+              </div>
+            )}
 
             {searchLoading ? (
               <div className="text-center py-12">
