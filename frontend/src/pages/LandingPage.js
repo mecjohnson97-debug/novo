@@ -1,115 +1,137 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import { HandHeart, HeartHandshake, Shield, Award, Users, ArrowRight, Utensils, Home, Scale, Briefcase } from 'lucide-react';
+import { Search, Wrench, Leaf, Truck, GraduationCap, Sparkles, Car, Baby, Briefcase, ArrowRight, MessageCircle, ShieldCheck, QrCode, Star, Check } from 'lucide-react';
 
 const IMG = {
-  hero: 'https://images.pexels.com/photos/6646873/pexels-photo-6646873.jpeg?auto=compress&cs=tinysrgb&w=1400',
-  need: 'https://images.unsplash.com/photo-1593113616828-6f22bca04804?crop=entropy&cs=srgb&fm=jpg&w=900&q=70',
-  help: 'https://images.unsplash.com/photo-1628717341663-0007b0ee2597?crop=entropy&cs=srgb&fm=jpg&w=900&q=70',
-  care: 'https://images.pexels.com/photos/6436179/pexels-photo-6436179.jpeg?auto=compress&cs=tinysrgb&w=1000',
-  food: 'https://images.unsplash.com/photo-1599059813005-11265ba4b4ce?crop=entropy&cs=srgb&fm=jpg&w=700&q=70',
+  hero: 'https://images.unsplash.com/photo-1461938337379-4b537cd2db74?crop=entropy&cs=srgb&fm=jpg&w=1600&q=70',
+  worker: 'https://images.unsplash.com/photo-1649768870222-17848797d6b4?crop=entropy&cs=srgb&fm=jpg&w=900&q=70',
+  ride: 'https://images.unsplash.com/photo-1563161084-d8d8ff841bae?crop=entropy&cs=srgb&fm=jpg&w=1000&q=70',
 };
 
-const LANGS = ['pt', 'fr', 'en', 'es'];
-const keyAct = (fn) => (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fn(); } };
+const CATEGORIES = [
+  { icon: Wrench, label: 'Reformas e reparos' },
+  { icon: Sparkles, label: 'Limpeza e diarista' },
+  { icon: Leaf, label: 'Jardinagem' },
+  { icon: Truck, label: 'Mudanças e fretes' },
+  { icon: GraduationCap, label: 'Aulas particulares' },
+  { icon: Baby, label: 'Babá e cuidados' },
+  { icon: Car, label: 'Caronas' },
+  { icon: Briefcase, label: 'Vagas de emprego' },
+];
 
-function ChoiceCard({ img, icon: Icon, title, desc, accent, onClick, testId, cta }) {
-  return (
-    <div role="button" tabIndex={0} onClick={onClick} onKeyDown={keyAct(onClick)} className="land-card group" data-testid={testId}>
-      <div className="relative h-44 overflow-hidden sm:h-52">
-        <img src={img} alt="" loading="lazy" className="land-card-img h-full w-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/45 to-transparent" />
-        <span className={`absolute bottom-3 left-3 grid h-11 w-11 place-items-center rounded-2xl text-white ${accent}`}><Icon size={22} /></span>
-      </div>
-      <div className="p-5 text-left">
-        <h2 className="font-heading text-xl font-bold text-[#2C221E]">{title}</h2>
-        <p className="mt-1.5 text-[15px] leading-relaxed text-[#5C524B]">{desc}</p>
-        <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-[#1F7A6F]">{cta} <ArrowRight size={16} className="land-arrow" /></span>
-      </div>
-    </div>
-  );
-}
-
-function Feature({ icon: Icon, title, desc }) {
-  return (
-    <div className="rounded-2xl border border-[#ECE5DA] bg-white p-5">
-      <span className="grid h-11 w-11 place-items-center rounded-xl bg-[#FEFAE0] text-[#A0703F]"><Icon size={22} /></span>
-      <h3 className="mt-3 font-semibold text-[#2C221E]">{title}</h3>
-      <p className="mt-1 text-sm leading-relaxed text-[#5C524B]">{desc}</p>
-    </div>
-  );
-}
+const STEPS = [
+  { icon: MessageCircle, title: 'Publique seu pedido', desc: 'Diga do que precisa em poucos segundos: um encanador, uma faxina, uma carona.' },
+  { icon: Star, title: 'Receba propostas', desc: 'Vizinhos e profissionais perto de você respondem. Compare perfis, fotos e avaliações.' },
+  { icon: QrCode, title: 'Pague com Pix', desc: 'Pacotes e destaques pagos pelo QR Code Pix, rápido e sem taxa no cartão.' },
+];
 
 export default function LandingPage() {
   const navigate = useNavigate();
-  const { t, i18n } = useTranslation();
+  const go = () => navigate('/auth');
 
   return (
-    <div className="land-root min-h-screen" data-testid="landing-page">
-      <header className="relative">
-        <img src={IMG.hero} alt={t('landingHeroAlt')} className="absolute inset-0 h-full w-full object-cover" data-testid="landing-hero-image" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#2C221E]/75 via-[#2C221E]/60 to-[#2C221E]/45" />
-        <div className="absolute inset-x-0 bottom-0 h-10 bg-gradient-to-b from-transparent to-[#FDFBF7]" />
-        <div className="relative mx-auto max-w-5xl px-5 pb-20 pt-6 sm:pb-28">
-          <div className="flex items-center justify-between">
-            <span className="font-heading text-lg font-bold text-white">Watizat</span>
-            <div className="flex gap-1.5" data-testid="language-selector">
-              {LANGS.map((code) => (
-                <button key={code} onClick={() => i18n.changeLanguage(code)} data-testid={`lang-${code}`}
-                  className={`rounded-full px-3 py-1 text-xs font-semibold uppercase transition-colors ${i18n.language === code ? 'bg-white text-[#2C221E]' : 'bg-white/15 text-white hover:bg-white/30'}`}>
-                  {code}
-                </button>
-              ))}
+    <div className="vz-dark min-h-screen" data-testid="landing-page">
+      <header className="relative overflow-hidden">
+        <img src={IMG.hero} alt="Profissional fazendo reparo em casa" className="absolute inset-0 h-full w-full object-cover opacity-35" data-testid="landing-hero-image" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0B132B] via-[#0B132B]/90 to-[#0B132B]/40" />
+        <div className="relative mx-auto max-w-6xl px-5 pb-20 pt-6 sm:pb-28">
+          <nav className="flex items-center justify-between">
+            <span className="font-heading text-xl font-extrabold tracking-tight text-white">Vizi<span className="text-cyan-400">nhos</span></span>
+            <div className="flex items-center gap-2">
+              <button onClick={() => navigate('/pacotes')} className="hidden rounded-full px-4 py-2 text-sm font-medium text-slate-300 transition-colors hover:text-white sm:block" data-testid="landing-plans-link">Pacotes</button>
+              <button onClick={go} className="vz-btn-outline px-5 py-2 text-sm" data-testid="login-button">Entrar</button>
             </div>
-          </div>
-          <div className="max-w-2xl pt-16 sm:pt-24">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#F3D9B5]">{t('landingKicker')}</p>
-            <h1 className="mt-3 font-heading text-4xl font-bold leading-[1.1] text-white sm:text-6xl" data-testid="landing-title">{t('welcome')}</h1>
-            <p className="mt-4 max-w-xl text-lg leading-relaxed text-white/90">{t('tagline')}</p>
-            <div className="mt-6 flex flex-wrap gap-2 text-xs font-medium text-white/90">
-              {[[Utensils, t('landingFood')], [Home, t('landingHousing')], [Scale, t('landingLegal')], [Briefcase, t('landingWork')]].map(([Icon, l]) => (
-                <span key={l} className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3 py-1.5"><Icon size={13} /> {l}</span>
-              ))}
+          </nav>
+          <div className="vz-rise max-w-2xl pt-16 sm:pt-24">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-cyan-400">Serviços, caronas e vagas perto de você</p>
+            <h1 className="mt-4 font-heading text-4xl font-extrabold leading-[1.05] text-white sm:text-6xl" data-testid="landing-title">
+              Seus vizinhos resolvem.<br /><span className="text-cyan-400">Você descansa.</span>
+            </h1>
+            <p className="mt-5 max-w-xl text-lg leading-relaxed text-slate-300">Peça ajuda, ofereça seus serviços e ganhe uma renda extra. Particulares e profissionais da sua região, em um só lugar.</p>
+            <form onSubmit={(e) => { e.preventDefault(); go(); }} className="mt-8 flex max-w-xl flex-col gap-2 rounded-2xl border border-slate-700/60 bg-slate-900/80 p-2 backdrop-blur-xl sm:flex-row" data-testid="landing-search-form">
+              <div className="flex flex-1 items-center gap-2 px-3">
+                <Search size={18} className="text-slate-400" />
+                <input placeholder="O que você precisa hoje? Ex: encanador, mudança" className="h-12 w-full bg-transparent text-white placeholder:text-slate-500 focus:outline-none" data-testid="landing-search-input" />
+              </div>
+              <button type="submit" className="vz-btn-primary h-12 px-6" data-testid="landing-search-button">Buscar</button>
+            </form>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <button onClick={() => navigate('/auth?role=migrant')} className="vz-btn-amber px-6 py-3" data-testid="need-help-card">Preciso de um serviço</button>
+              <button onClick={() => navigate('/auth?role=helper')} className="vz-btn-outline px-6 py-3" data-testid="want-to-help-card">Quero oferecer serviços</button>
             </div>
           </div>
         </div>
       </header>
 
-      <main className="relative mx-auto -mt-8 max-w-5xl px-5">
-        <div className="grid gap-5 md:grid-cols-2">
-          <ChoiceCard img={IMG.need} icon={HandHeart} title={t('needHelp')} desc={t('needHelpDesc')} accent="bg-[#C8894F]" onClick={() => navigate('/auth?role=migrant')} testId="need-help-card" cta={t('landingStart')} />
-          <ChoiceCard img={IMG.help} icon={HeartHandshake} title={t('wantToHelp')} desc={t('wantToHelpDesc')} accent="bg-[#2A9D8F]" onClick={() => navigate('/auth?role=helper')} testId="want-to-help-card" cta={t('landingStart')} />
-        </div>
-
-        <div className="mt-8 flex flex-col items-center gap-3 text-center">
-          <p className="text-[#8C827A]">{t('alreadyAccount')}</p>
-          <button onClick={() => navigate('/auth')} className="feed-cta feed-cta-outline px-10" data-testid="login-button">{t('login')}</button>
-        </div>
-
-        <section className="mt-16 grid items-center gap-8 md:grid-cols-2">
-          <div className="grid grid-cols-2 gap-3">
-            <img src={IMG.care} alt={t('landingCareAlt')} loading="lazy" className="h-64 w-full rounded-3xl object-cover sm:h-80" />
-            <img src={IMG.food} alt={t('landingFoodAlt')} loading="lazy" className="mt-8 h-64 w-full rounded-3xl object-cover sm:h-80" />
-          </div>
-          <div>
-            <span className="inline-flex items-center gap-2 rounded-full bg-[#E9F5F3] px-3 py-1.5 text-xs font-semibold text-[#1F7A6F]"><Shield size={14} /> {t('forProfessionals')}</span>
-            <h2 className="mt-3 font-heading text-3xl font-bold text-[#2C221E]">{t('volunteerTitle')}</h2>
-            <p className="mt-3 leading-relaxed text-[#5C524B]">{t('volunteerDesc')}</p>
-            <button onClick={() => navigate('/volunteer-register')} className="feed-cta feed-cta-sage mt-6 px-8" data-testid="volunteer-register-button">
-              <Shield size={18} /> {t('registerVolunteer')}
+      <main className="mx-auto max-w-6xl px-5">
+        <section className="-mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4" data-testid="landing-categories">
+          {CATEGORIES.map(({ icon: Icon, label }, i) => (
+            <button key={label} onClick={go} style={{ animationDelay: `${i * 60}ms` }} className="vz-rise group flex items-center gap-3 rounded-2xl border border-slate-700/60 bg-[#1C2541] p-4 text-left transition-colors hover:border-cyan-500/50 hover:bg-[#233056]" data-testid={`landing-category-${i}`}>
+              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-cyan-500/10 text-cyan-400 transition-transform group-hover:scale-110"><Icon size={20} /></span>
+              <span className="text-sm font-semibold text-slate-100">{label}</span>
             </button>
+          ))}
+        </section>
+
+        <section className="mt-20 grid items-center gap-10 md:grid-cols-2">
+          <div>
+            <h2 className="font-heading text-3xl font-bold text-white sm:text-4xl">Como funciona</h2>
+            <div className="mt-8 space-y-6">
+              {STEPS.map(({ icon: Icon, title, desc }, i) => (
+                <div key={title} className="flex gap-4">
+                  <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-[#1E40AF] text-white"><Icon size={22} /></span>
+                  <div>
+                    <h3 className="font-semibold text-slate-100"><span className="mr-2 font-mono text-cyan-400">0{i + 1}</span>{title}</h3>
+                    <p className="mt-1 text-sm leading-relaxed text-slate-400">{desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <img src={IMG.worker} alt="Prestador de serviço sorrindo" loading="lazy" className="h-80 w-full rounded-3xl object-cover sm:h-[26rem]" />
+        </section>
+
+        <section className="mt-20 overflow-hidden rounded-3xl border border-slate-700/60 bg-[#1C2541] md:grid md:grid-cols-2" data-testid="landing-rides">
+          <img src={IMG.ride} alt="Carona na estrada" loading="lazy" className="h-60 w-full object-cover md:h-full" />
+          <div className="p-8 sm:p-10">
+            <span className="vz-chip">Novo · Caronas</span>
+            <h2 className="mt-4 font-heading text-3xl font-bold text-white">Divida a viagem, divida o custo</h2>
+            <p className="mt-3 leading-relaxed text-slate-400">Motoristas publicam o trajeto, passageiros reservam vagas. Combine tudo pelo chat do app.</p>
+            <button onClick={go} className="vz-btn-primary mt-6 px-6 py-3" data-testid="landing-rides-button">Encontrar carona <ArrowRight size={16} /></button>
           </div>
         </section>
 
-        <section className="mt-14 grid gap-4 pb-16 sm:grid-cols-3">
-          <Feature icon={Award} title={t('verifiedProfile')} desc={t('verifiedDesc')} />
-          <Feature icon={Users} title={t('targetedConnections')} desc={t('targetedDesc')} />
-          <Feature icon={HeartHandshake} title={t('impactMeasure')} desc={t('impactDesc')} />
+        <section className="mt-20" data-testid="landing-plans">
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <span className="vz-trial">3 dias grátis</span>
+              <h2 className="mt-3 font-heading text-3xl font-bold text-white sm:text-4xl">Pacotes para cada necessidade</h2>
+            </div>
+            <button onClick={() => navigate('/pacotes')} className="vz-btn-outline px-5 py-2.5 text-sm" data-testid="landing-see-plans">Ver todos os pacotes</button>
+          </div>
+          <div className="mt-8 grid gap-4 md:grid-cols-3">
+            {[['Grátis', 'R$ 0', 'Para começar a pedir e oferecer serviços'], ['Premium', 'R$ 29,90', 'Respostas ilimitadas e alertas de pedidos'], ['Pro', 'R$ 59,90', 'Para profissionais: selo, topo das buscas e destaques']].map(([n, p, d], i) => (
+              <div key={n} className={`rounded-3xl border p-6 ${i === 2 ? 'border-cyan-500/50 bg-gradient-to-b from-[#1E40AF]/40 to-[#1C2541]' : 'border-slate-700/60 bg-[#1C2541]'}`}>
+                <h3 className="font-heading text-xl font-bold text-white">{n}</h3>
+                <p className="mt-2 font-mono text-3xl font-bold text-white">{p}<span className="text-sm font-normal text-slate-400">/mês</span></p>
+                <p className="mt-3 flex gap-2 text-sm text-slate-400"><Check size={16} className="shrink-0 text-emerald-400" />{d}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="mt-20 grid gap-4 pb-20 sm:grid-cols-3">
+          {[[ShieldCheck, 'Perfis verificados', 'Fotos, avaliações e selo profissional para você escolher com confiança.'], [MessageCircle, 'Chat integrado', 'Combine preço, horário e detalhes sem sair do app.'], [QrCode, 'Pix na hora', 'QR Code e copia-e-cola para pagar pacotes em segundos.']].map(([Icon, t, d]) => (
+            <div key={t} className="rounded-2xl border border-slate-700/60 bg-[#1C2541]/60 p-6">
+              <Icon size={24} className="text-amber-400" />
+              <h3 className="mt-3 font-semibold text-slate-100">{t}</h3>
+              <p className="mt-1 text-sm leading-relaxed text-slate-400">{d}</p>
+            </div>
+          ))}
         </section>
       </main>
 
-      <footer className="border-t border-[#ECE5DA] py-8 text-center text-sm text-[#8C827A]">© 2026 Watizat · {t('landingFooter')}</footer>
+      <footer className="border-t border-slate-800 py-8 text-center text-sm text-slate-500">© 2026 Vizinhos · Serviços, caronas e vagas</footer>
     </div>
   );
 }

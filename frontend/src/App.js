@@ -22,6 +22,9 @@ const NearbyHelpersPage = React.lazy(() => import('./pages/NearbyHelpersPage'));
 const MapPage = React.lazy(() => import('./pages/MapPage'));
 const JobsPage = React.lazy(() => import('./pages/JobsPage'));
 const HousingPage = React.lazy(() => import('./pages/HousingPage'));
+const PlansPage = React.lazy(() => import('./pages/PlansPage'));
+const PaymentPage = React.lazy(() => import('./pages/PaymentPage'));
+const RidesPage = React.lazy(() => import('./pages/RidesPage'));
 
 // Componente de loading para Suspense
 const LoadingComponent = () => (
@@ -109,6 +112,9 @@ function App() {
             <Route path="/housing" element={user ? <HousingPage /> : <Navigate to="/" />} />
             <Route path="/nearby" element={user ? <NearbyHelpersPage /> : <Navigate to="/" />} />
             <Route path="/map" element={user ? <MapPage /> : <Navigate to="/" />} />
+            <Route path="/pacotes" element={<PlansPage />} />
+            <Route path="/pagamento/:id" element={user ? <PaymentPage /> : <Navigate to="/auth" />} />
+            <Route path="/caronas" element={user ? <RidesPage /> : <Navigate to="/auth" />} />
             <Route path="/volunteer-register" element={<VolunteerRegisterPage />} />
           </Routes>
         </Suspense>

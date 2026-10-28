@@ -1,0 +1,139 @@
+{
+  "project_title": "AlloVoisins-Style Neighborhood Services & Carpooling Platform (PT-BR)",
+  "context": "Marketplace Hybrid App for local neighborhood services, equipment rental, micro-jobs, and BlaBlaCar-style carpooling with Pix payments and tier subscriptions.",
+  "theme": {
+    "mode": "hybrid-dark-blue",
+    "primary_concept": "Deep Dark Blue Authority & Neighborhood Trust",
+    "color_palette": {
+      "bg_primary": "#0B132B",
+      "bg_surface": "#1C2541",
+      "bg_card": "#1E293B",
+      "bg_card_hover": "#334155",
+      "text_primary": "#F8FAFC",
+      "text_secondary": "#94A3B8",
+      "text_muted": "#64748B",
+      "brand_blue_dark": "#0A192F",
+      "brand_blue_accent": "#1E40AF",
+      "brand_cyan": "#06B6D4",
+      "brand_emerald": "#10B981",
+      "brand_amber": "#F59E0B",
+      "brand_pix_teal": "#32BCAD",
+      "border": "#334155",
+      "border_subtle": "#1E293B",
+      "glow_primary": "rgba(6, 182, 212, 0.15)"
+    }
+  },
+  "typography": {
+    "headings": {
+      "font_family": "Outfit, sans-serif",
+      "h1": "text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-50",
+      "h2": "text-2xl sm:text-3xl font-bold tracking-tight text-slate-100",
+      "h3": "text-xl sm:text-2xl font-semibold text-slate-100",
+      "h4": "text-lg font-semibold text-slate-200"
+    },
+    "body": {
+      "font_family": "Plus Jakarta Sans, sans-serif",
+      "large": "text-base sm:text-lg leading-relaxed text-slate-300",
+      "normal": "text-sm sm:text-base leading-normal text-slate-300",
+      "small": "text-xs sm:text-sm text-slate-400"
+    },
+    "mono": {
+      "font_family": "JetBrains Mono, monospace",
+      "usage": "Pix Copia-e-Cola codes, transaction hashes, price tags, and seat counters"
+    }
+  },
+  "layout_and_grids": {
+    "mobile_first": true,
+    "container_padding": "px-4 sm:px-6 lg:px-8",
+    "max_content_width": "max-w-7xl mx-auto",
+    "bottom_nav": {
+      "description": "Fixed bottom navigation bar on mobile with backdrop-blur dark blue surface, high contrast icons, and badged active indicators.",
+      "z_index": "z-50"
+    },
+    "grids": {
+      "services_bento": "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6",
+      "packages_pricing": "grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch",
+      "carpooling_list": "space-y-4 max-w-4xl mx-auto"
+    }
+  },
+  "visual_enhancers": {
+    "glassmorphism": "bg-slate-900/80 backdrop-blur-xl border border-slate-700/50 shadow-2xl",
+    "pix_card": "bg-gradient-to-br from-teal-950/40 via-slate-900 to-slate-900 border border-teal-500/30 rounded-2xl p-6",
+    "trial_badge": "inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 shadow-lg shadow-amber-500/20 animate-pulse",
+    "carpool_badge": "bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 px-2.5 py-1 rounded-full text-xs font-semibold"
+  },
+  "key_features_and_pages": [
+    {
+      "page_name": "Landing Page Marketplace (Início / Serviços)",
+      "route": "/",
+      "sections": [
+        "Hero Section with instant search (O que você precisa hoje? Ex: Encanador, Mudar móveis, Furadeira)",
+        "Quick Category Grid (Reformas, Jardins, Mudanças, Aulas, Eletrônicos, Caronas)",
+        "Últimos Pedidos dos Vizinhos (Feed preview with status badge: Aberto, Respondido, Em andamento)",
+        "Como Funciona o Voisins (3-step visual guide: Pedir -> Receber propostas -> Pagar com segurança via Pix)",
+        "Pacotes e Destaques preview card with 3 dias grátis CTA",
+        "Mobile App download / PWA callout"
+      ]
+    },
+    {
+      "page_name": "Planos e Destaques (Pacotes)",
+      "route": "/pacotes",
+      "highlights": [
+        "3 Subscription Tiers: Grátis (R$ 0/mês), Premium (R$ 29,90/mês), Pro (R$ 59,90/mês)",
+        "3 Dias Grátis Trial Banner with instant sign-up modal",
+        "Avulsos Boost Packs: Destaque 7 Dias (R$ 9,90), Destaque 15 Dias (R$ 17,90), Destaque 30 Dias (R$ 29,90)",
+        "Visual feature comparison checklist with green checkmarks"
+      ]
+    },
+    {
+      "page_name": "Pagamento Pix (Checkout & Validação)",
+      "route": "/pagamento",
+      "components": [
+        "Interactive Pix QR Code generator visual preview",
+        "Chave Pix Copia-e-Cola with 1-click copy button and toast alert",
+        "Validação pelo Admin (Status badge: Pendente -> Aprovado pelo Administrador)",
+        "Upload de Comprovante / Enviar aviso de pagamento button",
+        "Resumo do Pedido / Pacote Selecionado em BRL (R$)"
+      ]
+    },
+    {
+      "page_name": "Caronas Solidárias & Intermunicipais (Estilo BlaBlaCar)",
+      "route": "/caronas",
+      "components": [
+        "Search bar: Origem, Destino, Data, Vagas",
+        "Card de Viagem: Motorista (foto, avaliação, modelo do carro), Rota, Horário, Preço por vaga (R$), Vagas disponíveis",
+        "Botão 'Publicar Viagem' with dialog for route details",
+        "Botão 'Reservar Vagas' with seat selection and instant driver notification",
+        "Aba 'Minhas Caronas' (Oferecidas vs Reservadas)"
+      ]
+    },
+    {
+      "page_name": "Painel Admin (Aprovações e Configurações Pix)",
+      "route": "/admin",
+      "components": [
+        "Configuração da Chave Pix do Proprietário (Tipo de chave: CPF, CNPJ, Email, Aleatória)",
+        "Tabela de Pagamentos Pendentes com ação 'Aprovar Pagamento' e 'Rejeitar'",
+        "Métricas do Marketplace: Total faturado (R$), Pacotes Ativos, Caronas Realizadas"
+      ]
+    }
+  ],
+  "image_urls": {
+    "handyman_service": "https://images.unsplash.com/photo-1461938337379-4b537cd2db74?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1MDV8MHwxfHNlYXJjaHwxfHxoYW5keW1hbiUyMHJlcGFpciUyMGhvbWUlMjBzZXJ2aWNlJTIwd29ya2VyJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzkzMTg3MTk1fDA&ixlib=rb-4.1.0&q=85",
+    "worker_portrait": "https://images.unsplash.com/photo-1649768870222-17848797d6b4?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1MDV8MHwxfHNlYXJjaHw0fHxoYW5keW1hbiUyMHJlcGFpciUyMGhvbWUlMjBzZXJ2aWNlJTIwd29ya2VyJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzkzMTg3MTk1fDA&ixlib=rb-4.1.0&q=85",
+    "carpool_driver": "https://images.unsplash.com/photo-1656390239119-9907645cd479?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2MTJ8MHwxfHNlYXJjaHwzfHxjYXJwb29sJTIwZHJpdmVyJTIwcGFzc2VuZ2VyJTIwY2FyJTIwdHJhdmVsJTIwaGlnaHdheXxlbnwwfHx8fDE3OTMxODcxOTV8MA&ixlib=rb-4.1.0&q=85",
+    "carpool_travel": "https://images.unsplash.com/photo-1563161084-d8d8ff841bae?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2MTJ8MHwxfHNlYXJjaHwxfHxjYXJwb29sJTIwZHJpdmVyJTIwcGFzc2VuZ2VyJTIwY2FyJTIwdHJhdmVsJTIwaGlnaHdheXxlbnwwfHx8fDE3OTMxODcxOTV8MA&ixlib=rb-4.1.0&q=85"
+  },
+  "instructions_to_main_agent": [
+    "Use JavaScript (.js and .jsx files) ONLY. Do not create or rename files to .tsx.",
+    "Ensure all interactive elements have explicit data-testid attributes formatted in kebab-case.",
+    "Maintain high contrast dark blue styling throughout with #0B132B / #1C2541 backgrounds and cyan/amber/emerald accents.",
+    "Include full support for PT-BR currency formatted as R$ 0,00.",
+    "Implement Sonner toasts for copy-to-clipboard (Pix code) and payment submission notifications.",
+    "Ensure fixed headers and mobile bottom navigation do not obscure page content by applying correct padding (e.g., pb-24 on main wrappers)."
+  ],
+  "UNIVERSAL GUIDELINES FOR MAIN AGENT": {
+    "anti_ai_slop": "Do not center align the entire app container or use flat grey boxes. Use rich deep blue layers, subtle borders (#334155), and vibrant action accents.",
+    "accessibility": "Every interactive element MUST meet contrast standards with text-slate-100 or text-white on dark buttons.",
+    "testing_requirement": "All buttons, inputs, tabs, modals, and status badges MUST include data-testid attributes."
+  }
+}

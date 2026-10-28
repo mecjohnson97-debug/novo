@@ -4,11 +4,12 @@ import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '../components/ui/dialog';
 import BottomNav from '../components/BottomNav';
+import AdminPayments from '../components/admin/AdminPayments';
 import {
   Users, FileText, Link, MessageCircle, UserCheck, UserX,
   Trash2, Search, Filter, BarChart3, PieChart, TrendingUp,
   Shield, AlertTriangle, CheckCircle, XCircle, Edit, Eye,
-  RefreshCw, Download, Settings, Home, ChevronRight, Megaphone, Plus, Image as ImageIcon, UserPlus
+  RefreshCw, Download, Settings, Home, ChevronRight, Megaphone, Plus, Image as ImageIcon, UserPlus, QrCode
 } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -428,6 +429,7 @@ export default function AdminDashboard() {
     { id: 'posts', label: 'Publicações', icon: FileText },
     { id: 'housing', label: 'Hospedagem', icon: Home },
     { id: 'ads', label: 'Divulgações', icon: Megaphone },
+    { id: 'payments', label: 'Pagamentos Pix', icon: QrCode },
   ];
 
   return (
@@ -458,6 +460,7 @@ export default function AdminDashboard() {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
+                  data-testid={`admin-tab-${tab.id}`}
                   className={`flex items-center gap-2 px-4 py-3 rounded-xl font-medium transition-all whitespace-nowrap ${
                     activeTab === tab.id
                       ? 'bg-primary text-white'
@@ -474,6 +477,8 @@ export default function AdminDashboard() {
       </div>
 
       <div className="container mx-auto max-w-7xl px-4 py-6">
+        {activeTab === 'payments' && <AdminPayments />}
+
         {/* Overview Tab */}
         {activeTab === 'overview' && (
           <div className="space-y-6">

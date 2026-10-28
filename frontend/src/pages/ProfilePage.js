@@ -315,6 +315,10 @@ export default function ProfilePage() {
           )}
 
           <ProfilePhotos />
+          <button onClick={() => window.location.assign('/pacotes')} className="mt-6 flex w-full items-center justify-between rounded-2xl bg-[#0B132B] p-4 text-left text-white" data-testid="profile-plans-button">
+            <span><span className="block font-heading font-semibold">Meu plano e destaques</span><span className="text-sm text-slate-400">Premium, Pro e pacotes avulsos com Pix</span></span>
+            <span className="vz-trial">3 dias grátis</span>
+          </button>
 
           <div className="border-t border-gray-100 pt-6">
             <h3 className="font-bold text-textPrimary mb-3">Idioma do aplicativo</h3>

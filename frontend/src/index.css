@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700&family=DM+Sans:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Outfit:wght@400;500;700;800&family=DM+Sans:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -115,9 +115,9 @@ code {
         --card-foreground: 17 19% 15%;
         --popover: 0 0% 100%;
         --popover-foreground: 17 19% 15%;
-        --primary: 173 58% 39%;
+        --primary: 224 76% 40%;
         --primary-foreground: 0 0% 100%;
-        --secondary: 173 60% 30%;
+        --secondary: 226 64% 20%;
         --secondary-foreground: 0 0% 100%;
         --muted: 40 38% 95%;
         --muted-foreground: 26 10% 33%;
@@ -127,7 +127,7 @@ code {
         --destructive-foreground: 0 0% 98%;
         --border: 36 22% 88%;
         --input: 36 22% 88%;
-        --ring: 173 58% 39%;
+        --ring: 224 76% 40%;
         --radius: 1rem;
     }
 }
@@ -232,6 +232,7 @@ body { overscroll-behavior-y: none; -webkit-tap-highlight-color: transparent; }
   input, select, textarea { font-size: 16px !important; }
   .feed-sticky, .bottom-nav { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
   .feed-sticky { background: #FDFBF7; }
+  .bottom-nav { background: #0B132B !important; }
 }
 .bottom-nav { padding-bottom: env(safe-area-inset-bottom); }
 @media (hover: none) {
@@ -241,5 +242,30 @@ body { overscroll-behavior-y: none; -webkit-tap-highlight-color: transparent; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
 
-:focus-visible { outline: 2px solid #2A9D8F; outline-offset: 2px; }
+:focus-visible { outline: 2px solid #06B6D4; outline-offset: 2px; }
 :focus:not(:focus-visible) { outline: none; }
+
+/* Tema azul escuro (marketplace) */
+.vz-dark { background: #0B132B; color: #E2E8F0; font-family: 'Plus Jakarta Sans', sans-serif; }
+.vz-dark .font-mono, .font-mono { font-family: 'JetBrains Mono', monospace; }
+.vz-btn-primary, .vz-btn-outline, .vz-btn-amber, .vz-btn-pix { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; border-radius: 9999px; font-weight: 700; transition: background-color .2s, transform .15s, border-color .2s, color .2s; }
+.vz-btn-primary { background: #1E40AF; color: #fff; }
+.vz-btn-primary:hover { background: #2563EB; }
+.vz-btn-amber { background: #F59E0B; color: #0B132B; }
+.vz-btn-amber:hover { background: #FBBF24; }
+.vz-btn-outline { border: 1px solid #334155; color: #E2E8F0; background: transparent; }
+.vz-btn-outline:hover { border-color: #06B6D4; color: #fff; }
+.vz-btn-pix { background: #32BCAD; color: #0B132B; border-radius: .75rem; }
+.vz-btn-pix:hover { background: #45D0C1; }
+.vz-btn-primary:active, .vz-btn-amber:active, .vz-btn-outline:active, .vz-btn-pix:active { transform: scale(.97); }
+.vz-btn-primary:disabled, .vz-btn-amber:disabled, .vz-btn-outline:disabled { opacity: .6; cursor: not-allowed; }
+.vz-input { background: rgba(2, 6, 23, .5); border: 1px solid #334155; border-radius: .75rem; color: #F1F5F9; color-scheme: dark; }
+.vz-input::placeholder { color: #64748B; }
+.vz-input:focus { outline: none; border-color: #06B6D4; }
+.vz-chip { display: inline-flex; align-items: center; gap: .35rem; border-radius: 9999px; border: 1px solid rgba(6,182,212,.3); background: rgba(6,182,212,.1); color: #22D3EE; padding: .25rem .65rem; font-size: .75rem; font-weight: 600; }
+.vz-trial { display: inline-flex; align-items: center; border-radius: 9999px; padding: .3rem .8rem; font-size: .7rem; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; background: linear-gradient(90deg, #F59E0B, #F97316); color: #0B132B; box-shadow: 0 8px 24px rgba(245,158,11,.25); }
+.vz-pix-card { background: linear-gradient(135deg, rgba(19,78,74,.45), #0F172A 55%); border: 1px solid rgba(50,188,173,.35); border-radius: 1.25rem; padding: 1.5rem; }
+@keyframes vzRise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+.vz-rise { animation: vzRise .5s ease-out both; }
+.bottom-nav { background: rgba(11, 19, 43, 0.96) !important; border-top: 1px solid #1E293B !important; }
+.feed-badge-boost { background: linear-gradient(90deg, #F59E0B, #F97316); color: #0B132B; border-color: transparent; }

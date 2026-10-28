@@ -37,6 +37,7 @@ export default function PostCard({ post, token, currentUserId, onChat, index = 0
             {ROLES[post.user?.role] || 'Membro'} <span>·</span> <Clock size={11} className="flex-shrink-0" /> <span className="truncate">{timeAgo(post.created_at)}</span>
           </p>
         </div>
+        {post.is_boosted && <span className="feed-badge feed-badge-boost" data-testid={`post-boosted-${post.id}`}>Destaque</span>}
         {type && <span className={`feed-badge ${type.badge}`} data-testid={`post-type-${post.id}`}>{type.label}</span>}
       </header>
 

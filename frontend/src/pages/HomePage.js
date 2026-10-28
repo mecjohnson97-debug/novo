@@ -74,6 +74,17 @@ export default function HomePage() {
         <main className="min-w-0 max-w-2xl flex-1 space-y-4">
           <WelcomeStrip userName={user?.name} onNeedHelp={() => setShowCreate(true)} onWantHelp={() => navigate('/volunteers')} />
 
+          <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl bg-[#0B132B] p-4 text-white" data-testid="home-plans-banner">
+            <div>
+              <span className="vz-trial">3 dias grátis</span>
+              <p className="mt-2 font-heading font-semibold">Apareça para mais vizinhos com o Premium ou Pro</p>
+            </div>
+            <div className="flex gap-2">
+              <button onClick={() => navigate('/caronas')} className="vz-btn-outline px-4 py-2 text-sm" data-testid="home-rides-button">Caronas</button>
+              <button onClick={() => navigate('/pacotes')} className="vz-btn-amber px-4 py-2 text-sm" data-testid="home-plans-button">Ver pacotes</button>
+            </div>
+          </div>
+
           <div className="feed-sticky">
             <FeedFilters category={category} type={type} onCategory={setCategory} onType={setType} />
           </div>

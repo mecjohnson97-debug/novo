@@ -504,7 +504,8 @@ async def get_posts(
     # Imagens base64 NÃO vão no JSON do feed; são servidas por /posts/{id}/images/{idx}
     pipeline = [
         {'$match': {'$and': conditions}},
-        {'$sort': {'created_at': -1}},
+        {'$addFields': {'is_boosted': {'$gt': [{'$ifNull': ['$boosted_until', '']}, datetime.now(timezone.utc).isoformat()]}}},
+        {'$sort': {'is_boosted': -1, 'created_at': -1}},
         {'$skip': skip},
         {'$limit': limit + 1},
         {'$addFields': {'image_count': {'$size': {'$ifNull': ['$images', []]}}}},
@@ -2578,6 +2579,9 @@ async def translate_texts(data: TranslateIn, request: Request):
     return {'translations': [cached.get(k, t) for k, t in zip(keys, texts)]}
 
 app.include_router(api_router)
+
+from marketplace import build_router as build_marketplace_router
+app.include_router(build_marketplace_router(db, get_current_user, User))
 
 # Health check na raiz para o Render
 @app.get("/")
